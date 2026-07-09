@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Scrabble PFS</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">
+
+            🎲 Scrabble PFS
+
+        </div>
+
+        <div class="header-right">
+
+            <span id="appVersion">
+                v0.1
+            </span>
+
+        </div>
+
+    </header>
+
+    <div id="app">
+
+        <!-- MENU -->
+
+        <aside id="sidebar">
+
+            <button class="menuButton active" data-page="dashboard">
+
+                🏠 Dashboard
+
+            </button>
+
+            <button class="menuButton" data-page="tournaments">
+
+                🏆 Turnieje
+
+            </button>
+
+            <button class="menuButton" data-page="players">
+
+                👥 Zawodnicy
+
+            </button>
+
+            <button class="menuButton" data-page="ranking">
+
+                📈 Ranking PFS
+
+            </button>
+
+            <button class="menuButton" data-page="settings">
+
+                ⚙ Ustawienia
+
+            </button>
+
+        </aside>
+
+        <!-- CONTENT -->
+
+        <main id="main">
+
+            <!-- DASHBOARD -->
+
+            <section id="dashboardPage" class="page">
+
+                <h1>Dashboard</h1>
+
+                <div class="cards">
+
+                    <div class="card">
+
+                        <h3>Turnieje</h3>
+
+                        <span id="dashboardTournamentCount">
+
+                            0
+
+                        </span>
+
+                    </div>
+
+                    <div class="card">
+
+                        <h3>Zawodnicy</h3>
+
+                        <span id="dashboardPlayerCount">
+
+                            0
+
+                        </span>
+
+                    </div>
+
+                    <div class="card">
+
+                        <h3>Partie</h3>
+
+                        <span id="dashboardGamesCount">
+
+                            0
+
+                        </span>
+
+                    </div>
+
+                    <div class="card">
+
+                        <h3>Rundy</h3>
+
+                        <span id="dashboardRoundCount">
+
+                            0
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- TURNIEJE -->
+
+            <section id="tournamentsPage" class="page hidden">
+
+                <div class="toolbar">
+
+                    <button id="btnNewTournament">
+
+                        ➕ Nowy
+
+                    </button>
+
+                    <button id="btnEditTournament">
+
+                        ✏ Edytuj
+
+                    </button>
+
+                    <button id="btnDeleteTournament">
+
+                        🗑 Usuń
+
+                    </button>
+
+                    <button id="btnOpenTournament">
+
+                        ▶ Otwórz
+
+                    </button>
+
+                </div>
+
+                <table id="tournamentTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Nazwa</th>
+
+                            <th>Sędzia</th>
+
+                            <th>Data</th>
+
+                            <th>Rundy</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+
+            </section>
+
+            <!-- ZAWODNICY -->
+
+            <section id="playersPage" class="page hidden">
+
+                <div class="toolbar">
+
+                    <button id="btnNewPlayer">
+
+                        ➕ Dodaj
+
+                    </button>
+
+                    <button id="btnEditPlayer">
+
+                        ✏ Edytuj
+
+                    </button>
+
+                    <button id="btnDeletePlayer">
+
+                        🗑 Usuń
+
+                    </button>
+
+                    <button id="btnImportPlayers">
+
+                        📥 Import CSV
+
+                    </button>
+
+                </div>
+
+                <table id="playerTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Nazwisko</th>
+
+                            <th>Imię</th>
+
+                            <th>Miasto</th>
+
+                            <th>Rank</th>
+
+                            <th>Skalp</th>
+
+                            <th>Gry</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+
+            </section>
+
+            <!-- RANKING -->
+
+            <section id="rankingPage" class="page hidden">
+
+                <div class="toolbar">
+
+                    <button id="btnRecalculateRanking">
+
+                        🔄 Przelicz ranking
+
+                    </button>
+
+                </div>
+
+                <table id="rankingTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Nazwisko</th>
+
+                            <th>Imię</th>
+
+                            <th>Miasto</th>
+
+                            <th>Rank</th>
+
+                            <th>Skalp</th>
+
+                            <th>Gry</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                    </tbody>
+
+                </table>
+
+            </section>
+
+            <!-- USTAWIENIA -->
+
+            <section id="settingsPage" class="page hidden">
+
+                <h2>Ustawienia</h2>
+
+                <div class="card">
+
+                    <p>Wersja programu: <b>0.1</b></p>
+
+                    <button id="btnExport">
+
+                        💾 Eksport danych
+
+                    </button>
+
+                    <button id="btnImport">
+
+                        📂 Import danych
+
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- NOWY TURNIEJ -->
+    <!-- ===================================== -->
+
+    <div id="newTournamentModal" class="modal hidden">
+
+        <div class="modal-window">
+
+            <div class="modal-header">
+
+                Nowy turniej
+
+            </div>
+
+            <label>Nazwa</label>
+
+            <input id="tournamentName" type="text">
+
+            <label>Sędzia</label>
+
+            <input id="tournamentReferee" type="text">
+
+            <label>Miejsce</label>
+
+            <input id="tournamentPlace" type="text">
+
+            <label>Data</label>
+
+            <input id="tournamentDate" type="date">
+
+            <label>Liczba rund</label>
+
+            <input id="tournamentRounds" type="number" min="1" value="7">
+            <hr>
+
+            <h3>System parowania rund</h3>
+
+            <div id="roundSystemsContainer">
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button id="btnSaveTournament">
+
+                    Zapisz
+
+                </button>
+
+                <button onclick="Dialogs.close('newTournamentModal')">
+
+                    Anuluj
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- NOWY ZAWODNIK -->
+    <!-- ===================================== -->
+<div id="playerModal" class="modal hidden">
+
+    <div class="modal-window large">
+
+        <div class="modal-header">
+
+            Zawodnicy turnieju
+
+        </div>
+
+        <div class="dualList">
+
+            <div class="dualColumn">
+
+                <h3>Wszyscy zawodnicy</h3>
+
+                <input
+                    id="playerSearch"
+                    type="text"
+                    placeholder="Szukaj...">
+
+                <select
+                    id="allPlayers"
+                    multiple>
+
+                </select>
+
+            </div>
+
+            <div class="dualButtons">
+
+                <button id="btnAddPlayer">
+
+                    >
+
+                </button>
+
+                <button id="btnRemovePlayer">
+
+                    <
+
+                </button>
+
+                <button id="btnAddAllPlayers">
+
+                    >>
+
+                </button>
+
+                <button id="btnRemoveAllPlayers">
+
+                    <<
+
+                </button>
+
+            </div>
+
+            <div class="dualColumn">
+
+                <h3>Zawodnicy turnieju</h3>
+
+                <select
+                    id="tournamentPlayers"
+                    multiple>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button id="btnSaveTournamentPlayers">
+
+                Zapisz
+
+            </button>
+
+            <button onclick="Dialogs.close('playerModal')">
+
+                Zamknij
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- ===================================== -->
+    <!-- NOWA RUNDA -->
+    <!-- ===================================== -->
+
+    <div id="roundModal" class="modal hidden">
+
+        <div class="modal-window">
+
+            <div class="modal-header">
+
+                Nowa runda
+
+            </div>
+
+            <label>System</label>
+
+            <select id="roundSystem">
+
+                <option value="HALF">
+
+                    Połówkowy
+
+                </option>
+
+                <option value="DUBOV">
+
+                    Dubov
+
+                </option>
+
+                <option value="DANISH">
+
+                    Duński
+
+                </option>
+
+            </select>
+
+            <label>
+
+                <input id="avoidRepeats" type="checkbox" checked>
+
+                Unikaj powtórek
+
+            </label>
+
+            <label>
+
+                <input id="expandGroups" type="checkbox" checked>
+
+                Rozszerzenie grup 1.5
+
+            </label>
+
+            <div class="modal-footer">
+
+                <button id="btnGenerateRound">
+
+                    Generuj
+
+                </button>
+
+                <button onclick="Dialogs.close('roundModal')">
+
+                    Zamknij
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- WYNIKI -->
+    <!-- ===================================== -->
+
+    <div id="resultsModal" class="modal hidden">
+
+        <div class="modal-window large">
+
+            <div class="modal-header">
+
+                Wyniki rundy
+
+            </div>
+
+            <table id="resultsTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Stół</th>
+
+                        <th>Gracz A</th>
+
+                        <th>Wynik</th>
+
+                        <th>Gracz B</th>
+
+                        <th>Wynik</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                </tbody>
+
+            </table>
+
+            <div class="modal-footer">
+
+                <button id="btnSaveResults">
+
+                    Zapisz wyniki
+
+                </button>
+
+                <button onclick="Dialogs.close('resultsModal')">
+
+                    Zamknij
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+
+        Scrabble PFS © 2026
+
+    </footer>
+
+    <script src="js/storage.js"></script>
+
+    <script src="js/models/Player.js"></script>
+    <script src="js/models/Tournament.js"></script>
+    <script src="js/models/Round.js"></script>
+    <script src="js/models/Game.js"></script>
+
+    <script src="js/services/TournamentService.js"></script>
+    <script src="js/services/PairingService.js"></script>
+    <script src="js/services/RankingService.js"></script>
+    <script src="js/services/PrintService.js"></script>
+
+    <script src="js/ui/Dialogs.js"></script>
+    <script src="js/ui/TournamentBrowser.js"></script>
+    <script src="js/ui/TournamentView.js"></script>
+    <script src="js/ui/PlayersView.js"></script>
+    <script src="js/ui/RoundView.js"></script>
+    <script src="js/ui/StandingsView.js"></script>
+    <script src="js/ui/RankingView.js"></script>
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
