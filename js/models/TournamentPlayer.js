@@ -10,10 +10,27 @@ class TournamentPlayer {
 
         this.city = player.city;
 
-        // Zamrożony ranking
+        // Ranking obowiązujący na rozpoczęcie turnieju
         this.startRank = player.tournamentRank;
 
-        // Wyniki
+        // Status zawodnika
+        // ACTIVE
+        // ABSENT
+        // WITHDRAWN
+        this.status = "ACTIVE";
+
+        // Numer rundy dołączenia do turnieju
+        this.joinRound = 1;
+
+        // Numer rundy wycofania
+        this.leaveRound = null;
+        // Powód wycofania
+        this.withdrawReason = "";
+
+        // Nieobecności tylko w wybranych rundach
+        this.absentRounds = [];
+
+        // Wyniki rzeczywiste
         this.dp = 0;
 
         this.mp = 0;
@@ -37,27 +54,37 @@ class TournamentPlayer {
 
         this.tournamentScalp = 0;
 
-
-        // Status uczestnictwa
-        this.active = true;
-
-        this.withdrawRound = null;
-
-        this.withdrawReason = "";
-
-        this.joinRound = 1;
+        // Historia przeciwników
+        this.opponents = [];
 
         // Wyrównania PFS
         this.compensationDP = 0;
 
         this.compensationMP = 0;
 
+        // Oryginalnie przyznane wyrównanie
         this.originalCompensationDP = 0;
 
         this.originalCompensationMP = 0;
 
-        // Historia przeciwników
-        this.opponents = [];
+    }
+
+    //==========================================
+    // Czy bierze udział w następnym parowaniu
+    //==========================================
+
+    isAvailable(roundNumber) {
+
+        if (this.status === "WITHDRAWN")
+            return false;
+
+        if (this.status === "ABSENT")
+            return false;
+
+        if (this.absentRounds.includes(roundNumber))
+            return false;
+
+        return true;
 
     }
 
