@@ -3,6 +3,11 @@ class PlayersView {
     static selectedId = null;
 
     static init() {
+           console.log("btnNewPlayer", document.getElementById("btnNewPlayer"));
+console.log("btnSavePlayer", document.getElementById("btnSavePlayer"));
+console.log("btnDeletePlayer", document.getElementById("btnDeletePlayer"));
+console.log("btnAddPlayer", document.getElementById("btnAddPlayer"));
+console.log("btnRemovePlayer", document.getElementById("btnRemovePlayer"));
 
         document.getElementById("btnNewPlayer").onclick = () => {
 
@@ -31,6 +36,7 @@ class PlayersView {
                 document.getElementById("tournamentPlayers")
 
             );
+         
 
         };
 
