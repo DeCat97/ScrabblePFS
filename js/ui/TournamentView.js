@@ -6,6 +6,11 @@ class TournamentView {
     // Otwórz turniej
     //=========================================
 
+
+    static load(tournamentId) {
+        this.open(tournamentId);
+    }
+
     static open(tournamentId) {
 
         App.currentTournament = tournamentId;
