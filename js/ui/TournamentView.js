@@ -56,16 +56,16 @@ class TournamentView {
 
     static refreshInfo() {
 
-        document.getElementById("tournamentName").innerText =
+        document.getElementById("tvTournamentName").innerText =
             this.tournament.name;
 
-        document.getElementById("tournamentReferee").innerText =
+        document.getElementById("tvTournamentReferee").innerText =
             this.tournament.referee;
 
-        document.getElementById("tournamentPlace").innerText =
+        document.getElementById("tvTournamentPlace").innerText =
             this.tournament.place;
 
-        document.getElementById("tournamentDate").innerText =
+        document.getElementById("tvTournamentDate").innerText =
             this.tournament.date;
 
     }

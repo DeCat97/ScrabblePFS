@@ -1,10 +1,17 @@
 class App {
+    static tournamentService = null;
 
     static currentPage = "dashboard";
 
     static currentTournament = null;
 
     static init() {
+        App.tournamentService = new TournamentService({
+            storageService: new StorageService(),
+            standingsService: new StandingsService(),
+            compensationService: new CompensationService(),
+            pairingService: new PairingService()
+        });
 
         // Storage.init();
 
@@ -54,7 +61,7 @@ class App {
             .getElementById(page + "Page")
             .classList.remove("hidden");
 
-        switch(page){
+        switch (page) {
 
             case "dashboard":
 
@@ -84,7 +91,7 @@ class App {
 
     }
 
-    static updateDashboard(){
+    static updateDashboard() {
 
         document.getElementById("dashboardTournamentCount").innerText =
             Storage.getTournaments().length;
@@ -92,27 +99,27 @@ class App {
         document.getElementById("dashboardPlayerCount").innerText =
             Storage.getPlayers().length;
 
-        let rounds=0;
+        let rounds = 0;
 
-        let games=0;
+        let games = 0;
 
-        Storage.getTournaments().forEach(t=>{
+        Storage.getTournaments().forEach(t => {
 
-            rounds+=t.rounds.length;
+            rounds += t.rounds.length;
 
-            t.rounds.forEach(r=>games+=r.games.length);
+            t.rounds.forEach(r => games += r.games.length);
 
         });
 
-        document.getElementById("dashboardRoundCount").innerText=rounds;
+        document.getElementById("dashboardRoundCount").innerText = rounds;
 
-        document.getElementById("dashboardGamesCount").innerText=games;
+        document.getElementById("dashboardGamesCount").innerText = games;
 
     }
 
 }
 
-window.onload=()=>{
+window.onload = () => {
 
     App.init();
 

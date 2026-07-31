@@ -942,9 +942,9 @@ class TournamentService {
         if (!this.tournament)
             return false;
 
-       return this.tournament.rounds.some(
-    round => round.status !== "APPROVED"
-);
+        return this.tournament.rounds.some(
+            round => round.status !== "APPROVED"
+        );
 
     }
 
@@ -1011,6 +1011,21 @@ class TournamentService {
 
         this.tournament = null;
 
+    }
+    // ==========================================
+    // Kompatybilność ze starym kodem
+    // ==========================================
+
+    static current() {
+        return App.tournamentService.getTournament();
+    }
+
+    static save() {
+        return App.tournamentService.commit();
+    }
+
+    static refresh(fromRound = 1) {
+        return App.tournamentService.refresh(fromRound);
     }
 
 }

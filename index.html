@@ -328,6 +328,89 @@
         </main>
 
     </div>
+    <section id="tournamentPage" class="page hidden">
+
+    <div class="toolbar">
+
+        <button id="btnBackToTournaments">
+            ⬅ Powrót
+        </button>
+
+        <button id="btnNewRound">
+            ➕ Nowa runda
+        </button>
+
+        <button id="btnTournamentPlayers">
+            👥 Zawodnicy
+        </button>
+
+    </div>
+
+    <h2 id="tvTournamentName"></h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <b>Sędzia</b><br>
+            <span id="tvTournamentReferee"></span>
+        </div>
+
+        <div class="card">
+            <b>Miejsce</b><br>
+            <span id="tvTournamentPlace"></span>
+        </div>
+
+        <div class="card">
+            <b>Data</b><br>
+            <span id="tvTournamentDate"></span>
+        </div>
+
+    </div>
+
+    <h3>Rundy</h3>
+
+    <table id="roundsTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Runda</th>
+                <th>System</th>
+                <th>Status</th>
+                <th>Partie</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody></tbody>
+
+    </table>
+
+    <h3>Klasyfikacja</h3>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>#</th>
+                <th>Gracz</th>
+                <th>DP</th>
+                <th>MP</th>
+                <th>Różnica</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tStandings"></tbody>
+
+    </table>
+
+</section>
 
 
     <!-- ===================================== -->
@@ -625,17 +708,32 @@
 
     </footer>
 
-    <script src="js/storage.js"></script>
+    <script src="js/Storage.js"></script>
 
     <script src="js/models/Player.js"></script>
     <script src="js/models/Tournament.js"></script>
     <script src="js/models/Round.js"></script>
     <script src="js/models/Game.js"></script>
+    <script src="js/models/PlayerStatus.js"></script>
+    <script src="js/models/RoundStatus.js"></script>
+    <script src="js/models/TournamentPlayer.js"></script>
+    <script src="js/models/PlayerTournamentStats.js"></script>
+
 
     <script src="js/services/TournamentService.js"></script>
     <script src="js/services/PairingService.js"></script>
     <script src="js/services/RankingService.js"></script>
     <script src="js/services/PrintService.js"></script>
+    <script src="js/services/StorageService.js"></script>
+    <script src="js/services/GameService.js"></script>
+    <script src="js/services/StandingsService.js"></script>
+    <script src="js/services/CompensationService.js"></script>
+
+    <script src="js/pairing/PairingUtils.js"></script>
+    <script src="js/pairing/HalfSwiss.js"></script>
+    <script src="js/pairing/Danish.js"></script>
+    <script src="js/pairing/Dubov.js"></script>
+
 
     <script src="js/ui/Dialogs.js"></script>
     <script src="js/ui/TournamentBrowser.js"></script>
@@ -644,6 +742,8 @@
     <script src="js/ui/RoundView.js"></script>
     <script src="js/ui/StandingsView.js"></script>
     <script src="js/ui/RankingView.js"></script>
+    <script src="js/ui/MainMenu.js"></script>
+
 
     <script src="js/app.js"></script>
 

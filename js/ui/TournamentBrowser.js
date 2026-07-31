@@ -147,7 +147,7 @@ class TournamentBrowser {
                 Number(
                     document.getElementById("tournamentRounds").value
                 ),
-                roundSystems: systems,
+            roundSystems: systems,
 
             players: [],
 
@@ -215,6 +215,17 @@ class TournamentBrowser {
         }
 
         App.currentTournament = this.selectedId;
+        const tournament = Storage.getTournaments().find(
+            t => t.id === this.selectedId
+        );
+
+        if (!tournament) {
+            alert("Nie znaleziono turnieju.");
+            return;
+        }
+
+        App.tournamentService.load(tournament);
+
 
         TournamentView.load(this.selectedId);
 
