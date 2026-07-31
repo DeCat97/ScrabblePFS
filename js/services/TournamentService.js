@@ -652,7 +652,7 @@ class TournamentService {
 
         return this.tournament.rounds.filter(
             r => r.status === "APPROVED"
-        ).length;
+        );
 
     }
 
@@ -666,9 +666,8 @@ class TournamentService {
             return 0;
 
         return this.tournament.rounds.filter(
-            r => r.status === RoundStatus.APPROVED
+            r => r.status === "APPROVED"
         ).length;
-
     }
 
     //==================================================
@@ -943,9 +942,9 @@ class TournamentService {
         if (!this.tournament)
             return false;
 
-        return this.tournament.rounds.some(
-            round => round.status !== RoundStatus.APPROVED
-        );
+       return this.tournament.rounds.some(
+    round => round.status !== "APPROVED"
+);
 
     }
 
