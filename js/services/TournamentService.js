@@ -650,7 +650,7 @@ class TournamentService {
         if (this.tournament.rounds.length === 0)
             return false;
 
-        return this.tournament.rounds.filter(
+        return this.tournament.rounds.every(
             r => r.status === "APPROVED"
         );
 
