@@ -393,89 +393,36 @@
     <!-- ===================================== -->
     <!-- NOWY ZAWODNIK -->
     <!-- ===================================== -->
-<div id="playerModal" class="modal hidden">
 
-    <div class="modal-window large">
+
+<div id="newPlayerModal" class="modal hidden">
+
+    <div class="modal-window">
 
         <div class="modal-header">
-
-            Zawodnicy turnieju
-
+            Zawodnik
         </div>
 
-        <div class="dualList">
+        <label>Nazwisko</label>
+        <input id="playerSurname" type="text">
 
-            <div class="dualColumn">
+        <label>Imię</label>
+        <input id="playerName" type="text">
 
-                <h3>Wszyscy zawodnicy</h3>
+        <label>Miasto</label>
+        <input id="playerCity" type="text">
 
-                <input
-                    id="playerSearch"
-                    type="text"
-                    placeholder="Szukaj...">
-
-                <select
-                    id="allPlayers"
-                    multiple>
-
-                </select>
-
-            </div>
-
-            <div class="dualButtons">
-
-                <button id="btnAddPlayer">
-
-                    >
-
-                </button>
-
-                <button id="btnRemovePlayer">
-
-                    <
-
-                </button>
-
-                <button id="btnAddAllPlayers">
-
-                    >>
-
-                </button>
-
-                <button id="btnRemoveAllPlayers">
-
-                    <<
-
-                </button>
-
-            </div>
-
-            <div class="dualColumn">
-
-                <h3>Zawodnicy turnieju</h3>
-
-                <select
-                    id="tournamentPlayers"
-                    multiple>
-
-                </select>
-
-            </div>
-
-        </div>
+        <label>Ranking</label>
+        <input id="playerRank" type="number" value="100">
 
         <div class="modal-footer">
 
-            <button id="btnSaveTournamentPlayers">
-
+            <button id="btnSavePlayer">
                 Zapisz
-
             </button>
 
-            <button onclick="Dialogs.close('playerModal')">
-
-                Zamknij
-
+            <button onclick="Dialogs.close('newPlayerModal')">
+                Anuluj
             </button>
 
         </div>

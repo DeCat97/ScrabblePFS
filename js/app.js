@@ -6,7 +6,7 @@ class App {
 
     static init() {
 
-        Storage.init();
+        // Storage.init();
 
         this.initMenu();
 

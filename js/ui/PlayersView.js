@@ -8,8 +8,7 @@ class PlayersView {
 
             this.clearForm();
 
-            Dialogs.open("playerModal");
-
+            Dialogs.open("newPlayerModal");
         };
 
         document.getElementById("btnSavePlayer").onclick = () => {
