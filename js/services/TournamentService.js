@@ -1,347 +1,347 @@
 class TournamentService {
 
-  constructor({
-    storageService,
-    standingsService,
-    compensationService,
-    pairingService
-  }) {
+    constructor({
+        storageService,
+        standingsService,
+        compensationService,
+        pairingService
+    }) {
 
-    this.storage = storageService;
-    this.standings = standingsService;
-    this.compensation = compensationService;
-    this.pairing = pairingService;
+        this.storage = storageService;
+        this.standings = standingsService;
+        this.compensation = compensationService;
+        this.pairing = pairingService;
 
-    this.tournament = null;
+        this.tournament = null;
 
-  }
+    }
 
-  //==================================================
-  // Załadowanie turnieju
-  //==================================================
+    //==================================================
+    // Załadowanie turnieju
+    //==================================================
 
-  load(tournament) {
+    load(tournament) {
 
-    this.tournament = tournament;
+        this.tournament = tournament;
 
-    return this.tournament;
+        return this.tournament;
 
-  }
+    }
 
-  //==================================================
-  // Aktualny turniej
-  //==================================================
+    //==================================================
+    // Aktualny turniej
+    //==================================================
 
-  getTournament() {
+    getTournament() {
 
-    return this.tournament;
+        return this.tournament;
 
-  }
+    }
 
-  //==================================================
-  // Utworzenie nowego turnieju
-  //==================================================
+    //==================================================
+    // Utworzenie nowego turnieju
+    //==================================================
 
-  createTournament(data) {
+    createTournament(data) {
 
-    const tournament = new Tournament();
+        const tournament = new Tournament();
 
-    tournament.name = data.name || "";
-    tournament.place = data.place || "";
-    tournament.startDate = data.startDate || "";
-    tournament.endDate = data.endDate || "";
-    tournament.roundsCount = data.roundsCount || 0;
-    tournament.status = "CREATED";
+        tournament.name = data.name || "";
+        tournament.place = data.place || "";
+        tournament.startDate = data.startDate || "";
+        tournament.endDate = data.endDate || "";
+        tournament.roundsCount = data.roundsCount || 0;
+        tournament.status = "CREATED";
 
-    tournament.players = [];
-    tournament.rounds = [];
+        tournament.players = [];
+        tournament.rounds = [];
 
-    this.tournament = tournament;
+        this.tournament = tournament;
 
-    this.save();
+        this.save();
 
-    return tournament;
+        return tournament;
 
-  }
+    }
 
-  //==================================================
-  // Zapis turnieju
-  //==================================================
+    //==================================================
+    // Zapis turnieju
+    //==================================================
 
-  save() {
+    save() {
 
-    if (!this.tournament)
-      return;
+        if (!this.tournament)
+            return;
 
-    if (this.storage && this.storage.saveTournament)
-      this.storage.saveTournament(this.tournament);
+        if (this.storage && this.storage.saveTournament)
+            this.storage.saveTournament(this.tournament);
 
-  }
+    }
 
-  //==================================================
-  // Czy turniej istnieje
-  //==================================================
+    //==================================================
+    // Czy turniej istnieje
+    //==================================================
 
-  hasTournament() {
+    hasTournament() {
 
-    return this.tournament !== null;
+        return this.tournament !== null;
 
-  }
+    }
 
-  //==================================================
-  // Czy turniej rozpoczęty
-  //==================================================
+    //==================================================
+    // Czy turniej rozpoczęty
+    //==================================================
 
-  isStarted() {
+    isStarted() {
 
-    if (!this.tournament)
-      return false;
+        if (!this.tournament)
+            return false;
 
-    return this.tournament.rounds.length > 0;
+        return this.tournament.rounds.length > 0;
 
-  }
+    }
 
-  //==================================================
-  // Czy turniej zakończony
-  //==================================================
+    //==================================================
+    // Czy turniej zakończony
+    //==================================================
 
-  isFinished() {
+    isFinished() {
 
-    if (!this.tournament)
-      return false;
+        if (!this.tournament)
+            return false;
 
-    return this.tournament.status === "FINISHED";
+        return this.tournament.status === "FINISHED";
 
-  }
+    }
 
-  //==================================================
-  // Zamknięcie turnieju
-  //==================================================
+    //==================================================
+    // Zamknięcie turnieju
+    //==================================================
 
-  finishTournament() {
+    finishTournament() {
 
-    if (!this.tournament)
-      return false;
+        if (!this.tournament)
+            return false;
 
-    this.tournament.status = "FINISHED";
+        this.tournament.status = "FINISHED";
 
-    this.save();
+        this.save();
 
-    return true;
+        return true;
 
-  }
-  //==================================================
-  // Lista zawodników
-  //==================================================
+    }
+    //==================================================
+    // Lista zawodników
+    //==================================================
 
-  getPlayers() {
+    getPlayers() {
 
-    if (!this.tournament)
-      return [];
+        if (!this.tournament)
+            return [];
 
-    return this.tournament.players;
+        return this.tournament.players;
 
-  }
+    }
 
-  //==================================================
-  // Zawodnik po ID
-  //==================================================
+    //==================================================
+    // Zawodnik po ID
+    //==================================================
 
-  getPlayer(id) {
+    getPlayer(id) {
 
-    if (!this.tournament)
-      return null;
+        if (!this.tournament)
+            return null;
 
-    return this.tournament.players.find(
-      p => p.id === id
-    ) || null;
+        return this.tournament.players.find(
+            p => p.id === id
+        ) || null;
 
-  }
+    }
 
-  //==================================================
-  // Dodanie zawodnika
-  //==================================================
+    //==================================================
+    // Dodanie zawodnika
+    //==================================================
 
-  addPlayer(player) {
+    addPlayer(player) {
 
-    if (!this.tournament)
-      return false;
+        if (!this.tournament)
+            return false;
 
-    if (this.isStarted())
-      return false;
+        if (this.isStarted())
+            return false;
 
-    this.tournament.players.push(
-      new TournamentPlayer(player)
-    );
+        this.tournament.players.push(
+            new TournamentPlayer(player)
+        );
 
-    this.save();
+        this.save();
 
-    return true;
+        return true;
 
-  }
+    }
 
-  //==================================================
-  // Edycja zawodnika
-  //==================================================
+    //==================================================
+    // Edycja zawodnika
+    //==================================================
 
-  updatePlayer(player) {
+    updatePlayer(player) {
 
-    const p = this.getPlayer(player.id);
+        const p = this.getPlayer(player.id);
 
-    if (!p)
-      return false;
+        if (!p)
+            return false;
 
-    p.firstName = player.firstName;
-    p.lastName = player.lastName;
-    p.city = player.city;
-    p.startRank = player.startRank;
+        p.firstName = player.firstName;
+        p.lastName = player.lastName;
+        p.city = player.city;
+        p.startRank = player.startRank;
 
-    this.save();
+        this.save();
 
-    return true;
+        return true;
 
-  }
+    }
 
-  //==================================================
-  // Usunięcie zawodnika
-  //==================================================
+    //==================================================
+    // Usunięcie zawodnika
+    //==================================================
 
-  removePlayer(id) {
+    removePlayer(id) {
 
-    if (!this.tournament)
-      return false;
+        if (!this.tournament)
+            return false;
 
-    if (this.isStarted())
-      return false;
+        if (this.isStarted())
+            return false;
 
-    this.tournament.players =
-      this.tournament.players.filter(
-        p => p.id !== id
-      );
+        this.tournament.players =
+            this.tournament.players.filter(
+                p => p.id !== id
+            );
 
-    this.save();
+        this.save();
 
-    return true;
+        return true;
 
-  }
+    }
 
-  //==================================================
-  // Wycofanie zawodnika
-  //==================================================
+    //==================================================
+    // Wycofanie zawodnika
+    //==================================================
 
-  withdrawPlayer(id, reason = "") {
+    withdrawPlayer(id, reason = "") {
 
-    const player = this.getPlayer(id);
+        const player = this.getPlayer(id);
 
-    if (!player)
-      return false;
+        if (!player)
+            return false;
 
-    player.status = PlayerStatus.WITHDRAWN;
+        player.status = PlayerStatus.WITHDRAWN;
 
-    player.leaveRound =
-      this.tournament.rounds.length;
+        player.leaveRound =
+            this.tournament.rounds.length;
 
-    player.withdrawReason = reason;
+        player.withdrawReason = reason;
 
-    this.save();
+        this.save();
 
-    return true;
+        return true;
 
-  }
+    }
 
-  //==================================================
-  // Przywrócenie zawodnika
-  //==================================================
+    //==================================================
+    // Przywrócenie zawodnika
+    //==================================================
 
-  restorePlayer(id) {
+    restorePlayer(id) {
 
-    const player = this.getPlayer(id);
+        const player = this.getPlayer(id);
 
-    if (!player)
-      return false;
+        if (!player)
+            return false;
 
-    player.status = PlayerStatus.ACTIVE;
+        player.status = PlayerStatus.ACTIVE;
 
-    player.leaveRound = null;
+        player.leaveRound = null;
 
-    player.withdrawReason = "";
+        player.withdrawReason = "";
 
-    this.save();
+        this.save();
 
-    return true;
+        return true;
 
-  }
+    }
 
-  //==================================================
-  // Nieobecność w rundzie
-  //==================================================
+    //==================================================
+    // Nieobecność w rundzie
+    //==================================================
 
-  markAbsent(id, roundNumber) {
+    markAbsent(id, roundNumber) {
 
-    const player = this.getPlayer(id);
+        const player = this.getPlayer(id);
 
-    if (!player)
-      return false;
+        if (!player)
+            return false;
 
-    if (!player.absentRounds.includes(roundNumber))
-      player.absentRounds.push(roundNumber);
+        if (!player.absentRounds.includes(roundNumber))
+            player.absentRounds.push(roundNumber);
 
-    this.save();
+        this.save();
 
-    return true;
+        return true;
 
-  }
+    }
 
-  //==================================================
-  // Dopisanie zawodnika
-  //==================================================
+    //==================================================
+    // Dopisanie zawodnika
+    //==================================================
 
-  addLatePlayer(playerData) {
+    addLatePlayer(playerData) {
 
-    const player =
-      new TournamentPlayer(playerData);
+        const player =
+            new TournamentPlayer(playerData);
 
-    player.joinRound =
-      this.tournament.rounds.length + 1;
+        player.joinRound =
+            this.tournament.rounds.length + 1;
 
-    player.status =
-      PlayerStatus.ACTIVE;
+        player.status =
+            PlayerStatus.ACTIVE;
 
-    this.compensation.assignCompensation(
-      this.tournament,
-      player
-    );
+        this.compensation.assignCompensation(
+            this.tournament,
+            player
+        );
 
-    this.tournament.players.push(player);
+        this.tournament.players.push(player);
 
-    this.save();
+        this.save();
 
-    return player;
+        return player;
 
-  }
+    }
 
-  //==================================================
-  // Aktywni zawodnicy
-  //==================================================
+    //==================================================
+    // Aktywni zawodnicy
+    //==================================================
 
-  getActivePlayers(roundNumber) {
+    getActivePlayers(roundNumber) {
 
-    return this.tournament.players.filter(player => {
+        return this.tournament.players.filter(player => {
 
-      if (player.status !== PlayerStatus.ACTIVE)
-        return false;
+            if (player.status !== PlayerStatus.ACTIVE)
+                return false;
 
-      if (player.joinRound > roundNumber)
-        return false;
+            if (player.joinRound > roundNumber)
+                return false;
 
-      if (player.absentRounds.includes(roundNumber))
-        return false;
+            if (player.absentRounds.includes(roundNumber))
+                return false;
 
-      return true;
+            return true;
 
-    });
+        });
 
-  }    //==================================================
+    }    //==================================================
     // Lista rund
     //==================================================
 
@@ -383,10 +383,10 @@ class TournamentService {
 
         const lastRound =
             this.tournament.rounds[
-                this.tournament.rounds.length - 1
+            this.tournament.rounds.length - 1
             ];
 
-        return lastRound.status === RoundStatus.APPROVED;
+        return lastRound.status === "APPROVED";
 
     }
 
@@ -441,10 +441,10 @@ class TournamentService {
 
         const last =
             this.tournament.rounds[
-                this.tournament.rounds.length - 1
+            this.tournament.rounds.length - 1
             ];
 
-        if (last.status === RoundStatus.APPROVED)
+        if (last.status === "APPROVED")
             return false;
 
         this.tournament.rounds.pop();
@@ -553,7 +553,7 @@ class TournamentService {
         game.scoreB = scoreB;
 
         // rozpoczęcie rundy
-        if (round.status === RoundStatus.NEW)
+        if (round.status === "NEW")
             round.start();
 
         // jeśli wszystkie wyniki wpisane
@@ -608,7 +608,7 @@ class TournamentService {
 
         }
 
-        if (round.status === RoundStatus.NEW)
+        if (round.status === "NEW")
             round.start();
 
         if (round.isComplete())
@@ -650,9 +650,9 @@ class TournamentService {
         if (this.tournament.rounds.length === 0)
             return false;
 
-        return this.tournament.rounds.every(
-            r => r.status === RoundStatus.APPROVED
-        );
+        return this.tournament.rounds.filter(
+            r => r.status === "APPROVED"
+        ).length;
 
     }
 
