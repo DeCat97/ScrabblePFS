@@ -117,6 +117,7 @@ class Storage {
             this.SETTINGS,
 
             settings
+             
 
         );
 
